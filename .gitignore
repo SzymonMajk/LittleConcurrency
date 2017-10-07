@@ -3,3 +3,9 @@
 
 # Ada Library Information
 *.ali
+
+#From Erland
+*.beam
+
+#From macs
+*.DS_Store

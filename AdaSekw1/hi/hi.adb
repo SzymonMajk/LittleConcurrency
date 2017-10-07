@@ -21,5 +21,4 @@ begin
   end loop;
   Put_Line("Hi " & Imie(1..Dlugosc)); 
   
-end Hi; 
- 
+end Hi;
