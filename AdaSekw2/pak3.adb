@@ -3,15 +3,49 @@ use Ada.Text_IO,Ada.Float_Text_IO,Ada.Numerics.Float_Random;
 
 package body pak3 is
 
-procedure printVector(V : in vector) is
+procedure proceedTask(V: in out vector; filename: 
+	String; print: Boolean; save: Boolean) is
+begin
+
+if print then
+    printVector(V);
+end if;
+
+randomVectorSet(V);
+
+if print then
+	printVector(V);
+end if;
+
+if isAscendingOrder(V) then
+	Put_Line("Vector is in ascending order.");
+else
+	Put_Line("Vector is not in ascending order. Trying to fix that!.");
+    sortVector(V);
+	if isAscendingOrder(V) then
+		Put_Line("After sort vector is in ascending order.");
+    else
+    	Put_Line("Vector is not in ascending order. Smth went wrong...");
+    end if;
+	if print then
+    	printVector(V);
+	end if;
+end if;
+
+if save then
+	saveVector(V,filename);
+end if;
+
+end proceedTask;
+
+procedure printVector(V : vector) is
 begin
 	Put_Line("Start printing vector:");
 	for E of V loop
 		Put(E);
-		--Put(", ");
         New_Line;
 	end loop;
-	Put_Line("That is my vector!");
+	Put_Line("That's my vector!");
 end printVector;
 	
 procedure randomVectorSet(V: in out vector) is
@@ -25,7 +59,7 @@ begin
 	Put_Line("New values set!");
 end randomVectorSet;
 	
-function isAscendingOrder(V: in vector)
+function isAscendingOrder(V: vector)
 return Boolean is
 begin
 	return (for all I in V'First..(V'Last-1) => V(I)<V(I+1));
