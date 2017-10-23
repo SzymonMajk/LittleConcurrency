@@ -4,8 +4,11 @@
 # Ada Library Information
 *.ali
 
-#From Erland
+#From Erlang
 *.beam
 
 #From macs
 *.DS_Store
+
+#Created files for tests
+*.exp
