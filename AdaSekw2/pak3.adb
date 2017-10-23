@@ -3,12 +3,14 @@ use Ada.Text_IO,Ada.Float_Text_IO,Ada.Numerics.Float_Random,Ada.Calendar;
 
 package body pak3 is
 
+
+
 procedure printVector(V : in vector) is
 begin
 	Put_Line("Start printing vector:");
 	for E of V loop
 		Put(E);
-		New_line;
+		Put(", ");
 	end loop;
 	Put_Line("That is my vector!");
 end printVector;
