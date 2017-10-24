@@ -12,3 +12,4 @@
 
 #Created files for tests
 *.exp
+*.out

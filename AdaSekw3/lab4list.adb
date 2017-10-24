@@ -1,6 +1,7 @@
 -- lab4.adb
 -- Materiały dydaktyczne
 -- J.P. 2017
+-- compile with lab4list.adb -gnata -o lab4list.out
 
 with Ada.Text_IO, Ada.Integer_Text_IO;
 use Ada.Text_IO, Ada.Integer_Text_IO;
@@ -40,21 +41,28 @@ end insertFront;
 function insertFront(List : access Element; D : in Integer) 
 	return access Element is ( new Element'(D,List) );  
    
-procedure insertWithSort(List : in out Elem_Ptr; D : in Integer) is 
+procedure insertWithSort(List : in out Elem_Ptr; D : in Integer) is
+Tmp : Elem_Ptr := List;
+E : Elem_Ptr := new Element;
 begin
-	null;
+	if List = Null then
+		insertFront(List,D);
+	else
+		while Tmp.Next /= Null loop
+			Tmp := Tmp.Next;
+		end loop;
+		E.all := (D,Null);
+		Tmp.Next := E;
+	end if;
 end insertWithSort;       
 
 List : Elem_Ptr := Null;
 
-begin
+begin 
 	print(List);
-	List := insertFront(List, 21);
-	print(List);
-	insertFront(List, 20);  
-	print(List);
-	for I in reverse 1..12 loop
-		insertFront(List, I);
+	for I in 1..6 loop
+		insertWithSort(List, I);
+		pragma Debug(print(List));
 	end loop;
 	print(List);
 end Lab4List;
