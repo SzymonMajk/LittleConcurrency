@@ -20,7 +20,7 @@ procedure print(List : access Element) is
 	L : access Element := List;
 begin
 	if List = Null then
-		Put_Line("List EMPTY!");
+		Put("List EMPTY!");
 	else
 		Put("List:");  
 	end if;  
@@ -42,16 +42,28 @@ function insertFront(List : access Element; D : in Integer)
 	return access Element is ( new Element'(D,List) );  
    
 procedure insertWithSort(List : in out Elem_Ptr; D : in Integer) is
-Tmp : Elem_Ptr := List;
+Tmp, Last : Elem_Ptr := List;
 E : Elem_Ptr := new Element;
 begin
+    E.all := (D,Null);
+
 	if List = Null then
 		insertFront(List,D);
-	else
+	elsif List.Next = Null then
+        if(List.Data < D) then
+            List.Next := E;
+        else
+            insertFront(List,D);
+        end if;
+    else
 		while Tmp.Next /= Null loop
-			Tmp := Tmp.Next;
+            if(List.Data < D) then
+                E.Next := Tmp.Next;
+                exit;
+            else
+			    Tmp := Tmp.Next;
+            end if;
 		end loop;
-		E.all := (D,Null);
 		Tmp.Next := E;
 	end if;
 end insertWithSort;       
@@ -60,7 +72,7 @@ List : Elem_Ptr := Null;
 
 begin 
 	print(List);
-	for I in 1..6 loop
+	for I in reverse 1..6 loop
 		insertWithSort(List, I);
 		pragma Debug(print(List));
 	end loop;
